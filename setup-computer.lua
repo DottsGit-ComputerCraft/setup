@@ -39,7 +39,7 @@ if not fs.exists("workspace/utils") then
     shell.run("mkdir workspace/utils")
 end
 term.redirect(originalTerm)
-write("ok")
+
 
 
 print("Checking utils...")
@@ -53,7 +53,7 @@ for _, script in ipairs(utilsScripts) do
     downloadFile(utilsUrl .. script, utilsSavePath .. script)
 end
 term.redirect(originalTerm)
-write("ok")
+
 
 print("Checking startup script...")
 local originalTerm = redirectTerm_To_Dummy(term)
@@ -61,7 +61,7 @@ local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/aut
 local startupSavePath = "startup.lua" -- Save in the root directory
 downloadFile(startupUrl, startupSavePath)
 term.redirect(originalTerm)
-write("ok")
+
 
 print("Checking autorun scripts...")
 local originalTerm = redirectTerm_To_Dummy(term)
@@ -74,7 +74,7 @@ for _, script in ipairs(autorunScripts) do
     downloadFile(autorunUrl .. script, autorunSavePath .. script)
 end
 term.redirect(originalTerm)
-write("ok")
+
 
 -- Remove the setup script from the root directory and put it in the utils folder
 if not fs.exists("workspace/autorun/setup-computer.lua") then
@@ -82,7 +82,7 @@ if not fs.exists("workspace/autorun/setup-computer.lua") then
     local originalTerm = redirectTerm_To_Dummy(term)
     shell.run("mv setup-computer.lua workspace/autorun/setup-computer.lua")
     term.redirect(originalTerm)
-    write("ok")
+    
 end
 
 print("Environment setup complete!")

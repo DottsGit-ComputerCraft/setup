@@ -68,3 +68,6 @@ print("\n--- Downloading Aliases Script ---")
 local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/set-custom-aliases.lua"
 local startupSavePath = "workspace/autorun/set-custom-aliases.lua"
 downloadFile(startupUrl, startupSavePath)
+
+-- Remove the setup script from the root directory
+shell.run("rm setup-computer.lua")

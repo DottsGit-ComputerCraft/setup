@@ -86,3 +86,4 @@ if not fs.exists("workspace/autorun/setup-computer.lua") then
 end
 
 print("Environment setup complete!")
+shell.run("reboot")

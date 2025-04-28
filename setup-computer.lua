@@ -77,13 +77,17 @@ term.redirect(originalTerm)
 
 
 -- Remove the setup script from the root directory and put it in the utils folder
+local rebootTerm = false
 if not fs.exists("workspace/autorun/setup-computer.lua") then
     print("Removing setup script...")
     local originalTerm = redirectTerm_To_Dummy(term)
     shell.run("mv setup-computer.lua workspace/autorun/setup-computer.lua")
+    rebootTerm = true
     term.redirect(originalTerm)
     
 end
 
 print("Environment setup complete!")
-shell.run("reboot")
+if rebootTerm then
+    shell.run("reboot")
+end

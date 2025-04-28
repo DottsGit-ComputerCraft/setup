@@ -2,7 +2,6 @@
 -- Purpose: Sets up the workspace and downloads necessary files.
 
 local function downloadFile(url, savePath)
-    print("Downloading " .. url .. " to " .. savePath .. " ...")
     -- Construct the wget command string. Quotes around URL/path aren't strictly needed
     -- by wget itself unless they contain spaces/special chars, but don't hurt.
     local command = "wget \"" .. url .. "\" \"" .. savePath .. "\""
@@ -46,19 +45,19 @@ end
 write("ok")
 
 print("Checking startup script...")
-local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/startup-computer.lua"
+local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/autorun/refs/heads/main/startup-computer.lua"
 local startupSavePath = "startup.lua" -- Save in the root directory
 downloadFile(startupUrl, startupSavePath)
 write("ok")
 
 print("Checking autorun scripts...")
-local autorunUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/"
+local autorunUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/autorun/refs/heads/main/"
 local autorunScripts = {
     "set-custom-aliases.lua"
 }
 local autorunSavePath = "workspace/autorun/"
 for _, script in ipairs(utilsScripts) do
-    downloadFile(autorunUrl .. script, autorunSavePath .. script
+    downloadFile(autorunUrl .. script, autorunSavePath .. script)
 end
 write("ok")
 

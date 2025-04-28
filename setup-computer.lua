@@ -1,21 +1,5 @@
 -- setup-computer.lua
--- Purpose: Sets up the workspace, downloads necessary files, and runs autorun scripts.
-
-local function createDir(path)
-    if not fs.isDir(path) then
-        print("Creating directory: " .. path)
-        fs.makeDir(path)
-        if not fs.isDir(path) then
-            printError("ERROR: Failed to create directory: " .. path)
-            return false
-        end
-        print("Successfully created: " .. path)
-        return true
-    else
-        print("Directory already exists: " .. path)
-        return true -- Already exists, counts as success for setup purposes
-    end
-end
+-- Purpose: Sets up the workspace and downloads necessary files.
 
 local function downloadFile(url, savePath)
     print("Downloading " .. url .. " to " .. savePath .. " ...")
@@ -36,38 +20,53 @@ local function downloadFile(url, savePath)
     end
 end
 
--- 1. Create Directories
-print("\n--- Creating Directories ---")
-local dirsCreated = true
-dirsCreated = createDir("workspace") and dirsCreated
--- Only attempt to create subdirs if parent was created/existed
-if dirsCreated then
-    dirsCreated = createDir("workspace/autorun") and dirsCreated
-    dirsCreated = createDir("workspace/utils") and dirsCreated
+-- Check if directories exist
+print("Checking directories...")
+if not fs.exists("workspace") then
+    -- 1. Create Directories
+    shell.run("mkdir workspace")
 end
-
-if not dirsCreated then
-    printError("ERROR: Failed to create one or more base directories. Aborting further setup steps that depend on them.")
-    return -- Stop if essential directories couldn't be made
+if not fs.exists("workspace/autorun") then
+    shell.run("mkdir workspace/autorun")
 end
+if not fs.exists("workspace/utils") then
+    shell.run("mkdir workspace/utils")
+end
+write("ok")
 
--- 2. Download lua.lua using wget
-print("\n--- Downloading Utilities ---")
-local luaUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/lua-handler/refs/heads/main/lua.lua"
-local luaSavePath = "workspace/utils/lua" -- Save directly as 'lua'
-downloadFile(luaUrl, luaSavePath)
+print("Checking utils...")
+local utilsUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/utils/refs/heads/main/"
+local utilsScripts = {
+    "lua.lua"
+}
+local utilsSavePath = "workspace/utils/"
+for _, script in ipairs(utilsScripts) do
+    downloadFile(utilsUrl .. script, utilsSavePath .. script)
+end
+write("ok")
 
--- 3. Download startup-computer.lua using wget
-print("\n--- Downloading Startup Script ---")
+print("Checking startup script...")
 local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/startup-computer.lua"
 local startupSavePath = "startup.lua" -- Save in the root directory
 downloadFile(startupUrl, startupSavePath)
+write("ok")
 
--- 4. Download set-custom-alias.lua using wget
-print("\n--- Downloading Aliases Script ---")
-local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/set-custom-aliases.lua"
-local startupSavePath = "workspace/autorun/set-custom-aliases.lua"
-downloadFile(startupUrl, startupSavePath)
+print("Checking autorun scripts...")
+local autorunUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/"
+local autorunScripts = {
+    "set-custom-aliases.lua"
+}
+local autorunSavePath = "workspace/autorun/"
+for _, script in ipairs(utilsScripts) do
+    downloadFile(autorunUrl .. script, autorunSavePath .. script
+end
+write("ok")
 
--- Remove the setup script from the root directory
-shell.run("rm setup-computer.lua")
+-- Remove the setup script from the root directory and put it in the utils folder
+if not fs.exists("workspace/autorun/setup-computer.lua") then
+    print("Removing setup script...")
+    shell.run("mv setup-computer.lua workspace/autorun/setup-computer.lua")
+    write("ok")
+end
+
+print("Environment setup complete!")

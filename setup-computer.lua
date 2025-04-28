@@ -21,7 +21,8 @@ end
 
 local function redirectTerm_To_Dummy(term)
     local originalTerm = term.current()
-    term.redirect(term)
+    local dummyTerm = term.current()
+    term.redirect(dummyTerm)
     return originalTerm
 end
 

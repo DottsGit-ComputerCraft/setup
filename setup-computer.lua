@@ -56,7 +56,7 @@ local autorunScripts = {
     "set-custom-aliases.lua"
 }
 local autorunSavePath = "workspace/autorun/"
-for _, script in ipairs(utilsScripts) do
+for _, script in ipairs(autorunScripts) do
     downloadFile(autorunUrl .. script, autorunSavePath .. script)
 end
 write("ok")

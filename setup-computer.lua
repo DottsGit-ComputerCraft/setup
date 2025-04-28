@@ -60,11 +60,11 @@ downloadFile(luaUrl, luaSavePath)
 -- 3. Download startup-computer.lua using wget
 print("\n--- Downloading Startup Script ---")
 local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/startup-computer.lua"
-local startupSavePath = "startup-computer.lua" -- Save in the root directory
+local startupSavePath = "startup.lua" -- Save in the root directory
 downloadFile(startupUrl, startupSavePath)
 
 -- 4. Download set-custom-alias.lua using wget
 print("\n--- Downloading Aliases Script ---")
 local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/startup/refs/heads/main/set-custom-aliases.lua"
-local startupSavePath = "workspace/autorun/set-custom-aliases.lua" -- Save in the root directory
+local startupSavePath = "workspace/autorun/set-custom-aliases.lua"
 downloadFile(startupUrl, startupSavePath)

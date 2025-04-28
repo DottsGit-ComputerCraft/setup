@@ -8,13 +8,13 @@ local function downloadFile(url, savePath)
     local success = shell.run(command)
 
     if success and fs.exists(savePath) then
-        print("Successfully downloaded: " .. savePath)
+        --print("Successfully downloaded: " .. savePath)
         return true
     else
-        printError("ERROR: Failed to download or save file: " .. savePath)
-        if fs.exists(savePath) then
-           printError("  (Downloaded file might exist but wget reported failure)")
-        end
+        --printError("ERROR: Failed to download or save file: " .. savePath)
+        --if fs.exists(savePath) then
+        --    printError("  (Downloaded file might exist but wget reported failure)")
+        --end
         return false
     end
 end

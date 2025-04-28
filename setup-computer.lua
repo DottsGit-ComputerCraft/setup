@@ -19,10 +19,16 @@ local function downloadFile(url, savePath)
     end
 end
 
+local function redirectTerm_To_Dummy(term)
+    local originalTerm = term.current()
+    term.redirect(term)
+    return originalTerm
+end
+
 -- Check if directories exist
 print("Checking directories...")
+local originalTerm = redirectTerm_To_Dummy(term)
 if not fs.exists("workspace") then
-    -- 1. Create Directories
     shell.run("mkdir workspace")
 end
 if not fs.exists("workspace/autorun") then
@@ -31,9 +37,12 @@ end
 if not fs.exists("workspace/utils") then
     shell.run("mkdir workspace/utils")
 end
+term.redirect(originalTerm)
 write("ok")
 
+
 print("Checking utils...")
+local originalTerm = redirectTerm_To_Dummy(term)
 local utilsUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/utils/refs/heads/main/"
 local utilsScripts = {
     "lua.lua"
@@ -42,15 +51,19 @@ local utilsSavePath = "workspace/utils/"
 for _, script in ipairs(utilsScripts) do
     downloadFile(utilsUrl .. script, utilsSavePath .. script)
 end
+term.redirect(originalTerm)
 write("ok")
 
 print("Checking startup script...")
+local originalTerm = redirectTerm_To_Dummy(term)
 local startupUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/autorun/refs/heads/main/startup-computer.lua"
 local startupSavePath = "startup.lua" -- Save in the root directory
 downloadFile(startupUrl, startupSavePath)
+term.redirect(originalTerm)
 write("ok")
 
 print("Checking autorun scripts...")
+local originalTerm = redirectTerm_To_Dummy(term)
 local autorunUrl = "https://raw.githubusercontent.com/DottsGit-ComputerCraft/autorun/refs/heads/main/"
 local autorunScripts = {
     "set-custom-aliases.lua"
@@ -59,12 +72,15 @@ local autorunSavePath = "workspace/autorun/"
 for _, script in ipairs(autorunScripts) do
     downloadFile(autorunUrl .. script, autorunSavePath .. script)
 end
+term.redirect(originalTerm)
 write("ok")
 
 -- Remove the setup script from the root directory and put it in the utils folder
 if not fs.exists("workspace/autorun/setup-computer.lua") then
     print("Removing setup script...")
+    local originalTerm = redirectTerm_To_Dummy(term)
     shell.run("mv setup-computer.lua workspace/autorun/setup-computer.lua")
+    term.redirect(originalTerm)
     write("ok")
 end
 
